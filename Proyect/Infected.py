@@ -5,7 +5,8 @@ class Infected:
     myUser = "";
 
     def __init__(self,ip,port):
-        self.ServerSocket = (ip,port) 
+        self.ServerSocket = (ip,port)
+        self.version = 0 
         
     def takeIp(self):
         self.myUser = os.getlogin()
@@ -17,9 +18,11 @@ class Infected:
         
     def reciveCommand(self,command):
         data = ""
-        
+
         self.sendData(data)
-        
+    
+    def update(self,cod,version):
+        self.version = version    
         
     def sendData(self,data):
         
