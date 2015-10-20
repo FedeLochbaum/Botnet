@@ -12,7 +12,7 @@ class Infected:
         self.lastAction = None
         
     def getDataFromSocket(self, socket):
-        return socket.recv(16).decode("utf-8")
+        return socket.recv(2000).decode("utf-8")
                 
     def listenForAction(self):
         while True:
