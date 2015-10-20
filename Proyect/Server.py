@@ -4,7 +4,7 @@ class Server:
 
     def __init__(self, ip, port):
         self.ip = ip
-        self.port = port
+        self.port = port  
         
     def run(self):
         print(str(self.ip) + " " + str(self.port))
@@ -24,6 +24,7 @@ class Server:
                 # Clean up the connection
                 connection.close()
 
+
 class ServerOutput(Server):
             
     def runSpecific(self, connection):
@@ -34,6 +35,10 @@ class ServerInput(Server):
     
     def setMessage(self, message):
         self.message = message
+        
+    def AttackDdos(self,canonicalName,packageWeight): #la pregunta es: ¿esto deberia estar aca ? 
+        self.setMessage("ping "+ canonicalName + " -t -1 " + packageWeight)
+        self.run()
     
     def runSpecific(self, connection):
         connection.sendall((bytes(self.message, "utf-8")))
