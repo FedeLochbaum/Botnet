@@ -7,7 +7,7 @@ class Server:
         self.port = port
         
     def run(self):
-        print(str(self.ip) + " " + str(self.port))
+        print(str(self.ip) + " " + str(self.port))   #este print esta de mas ? :P
         # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
         # Bind the socket to the port
@@ -27,8 +27,8 @@ class Server:
 class ServerOutput(Server):
             
     def runSpecific(self, connection):
-        data = connection.recv(160000).decode("utf-8")
-        print(data)
+        data = connection.recv(160000).decode("utf-8")  # pregunta : aca pasa los bytes  a utf-8 ? 
+        print(data)  #hay que sacar los print desp de probar xD
     
 class ServerInput(Server):
     
@@ -36,4 +36,4 @@ class ServerInput(Server):
         self.message = message
     
     def runSpecific(self, connection):
-        connection.sendall((bytes(self.message, "utf-8")))
+        connection.sendall((bytes(self.message, "utf-8")))  #porque como bytes , denuevo :P ?
