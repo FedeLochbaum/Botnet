@@ -36,7 +36,7 @@ class ServerInput(Server):
     def setMessage(self, message):
         self.message = message
         
-    def AttackDdos(self,canonicalName,packageWeight): #la pregunta es: ¿esto deberia estar aca ? 
+    def AttackDdos(self,canonicalName,packageWeight):
         self.setMessage("ping "+ canonicalName + " -t -1 " + packageWeight)
         self.run()
     
