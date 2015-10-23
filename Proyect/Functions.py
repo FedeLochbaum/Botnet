@@ -3,11 +3,13 @@ message = ""
 
 mutex = threading.Lock()
 
-def setMessage(message, isFinish):
+def setMessage(mes, isFinish):
+    global message
     with mutex:
-        message = message+ " @ " + str(isFinish)
+        message = mes+ " @ " + str(isFinish)
         
 def getMessage():
-    with mutex:
-        return message
+    global message
+    with mutex:        
+        return bytes(message)
     

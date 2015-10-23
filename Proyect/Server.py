@@ -49,6 +49,6 @@ class ServerInput(Server):
         self.runSpecific(connection)
     
     def runSpecific(self, connection):
-        connection.sendall((bytes(getMessage(), "utf-8")))
+        connection.sendall(getMessage())
 
 

