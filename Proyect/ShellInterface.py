@@ -139,5 +139,3 @@ class AppNew:
         print("System send: " + text)
         event.widget.delete(1.0, END)
                         
-app = AppNew()
-app.root.mainloop()
