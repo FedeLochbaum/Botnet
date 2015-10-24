@@ -3,9 +3,9 @@ from Functions import setMessage
 from time import sleep
 from ShellInterface import AppNew
 
-ServerInput().start()
+ServerInput("192.168.1.105", 10000).start()
 setMessage("None")
-ServerOutput().start()
+ServerOutput("192.168.1.105", 10001).start()
 
 app = AppNew()
 app.root.mainloop()

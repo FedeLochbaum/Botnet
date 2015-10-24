@@ -4,10 +4,13 @@ import threading
 #from _dbus_bindings import Message
 
 class Server(threading.Thread):
+    
+    def __init__(self, ip, port):
+        threading.Thread.__init__(self)
+        self.ip = ip
+        self.port = port        
 
     def run(self):
-        
-        self.init()
         
         print(str(self.ip) + " " + str(self.port))
         # Create a TCP/IP socket
