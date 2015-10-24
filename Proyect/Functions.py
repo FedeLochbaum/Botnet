@@ -1,15 +1,25 @@
 import threading 
 message = ""
+connections = dict()
 
 mutex = threading.Lock()
 
-def setMessage(mes, isFinish):
+def setMessage(mes):
     global message
     with mutex:
-        message = mes+ " @ " + str(isFinish)
+        print("SET - Global ->" + mes)
+        message = mes
+        return  #+ " @ " + str(isFinish)
         
 def getMessage():
-    global message
-    with mutex:        
-        return bytes(message)
+    with mutex:
+        print("Global ->" + message)        
+        return bytes(message, "utf-8")
     
+def addConnection(ip_user, connection):
+    global connections
+    connections[ip_user] = connection
+    return
+    
+def getConnections():
+    return connections

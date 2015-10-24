@@ -1,162 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
+from Functions import setMessage
 
    
 def build(typeScheduler, typeMemory, ios, configOs):
     ''
-    
-class Config:
-
-    def __init__(self, parent, app):
-        top = self.top = Toplevel(parent)
-        top.title("Botnet Server Console")
-        top.geometry("300x400")
-        self.app = app
-        
-        self.createFrameForMemory(top)
-        self.createFrameForScheduler(top)
-        self.createFrameForIO(top)
-
-        b = Button(top, text="Lunch OS!!", command=self.ok)
-        b.pack()
-    
-    def createFrameForMemory(self, parent):
-        self.mainFrameMemory = ttk.Frame(parent)
-        #Titulo del mainFrame
-        Label(self.mainFrameMemory, text="Memory", background='black', foreground='white').pack(fill=BOTH)
-        ##Cuerpo
-        self.createBodyForMemory()       
-        self.mainFrameMemory.pack()
-        
-    def createBodyForMemory(self):
-        # Size Memory
-        Label(self.mainFrameMemory, text="Memory Size").pack()
-        self.entrySizeMemory = Entry(self.mainFrameMemory)
-        self.entrySizeMemory.pack()
-        
-        # Combobox TypeMemory
-        Label(self.mainFrameMemory, text="Memory Type").pack()
-        self.createComboboxForMemory()
-        
-    def createComboboxForMemory(self):
-        frmComboboxMemory = ttk.Frame(self.mainFrameMemory)
-        self.comboboxMemory = Combobox(frmComboboxMemory, text="Memory Type", values=None )
-        self.comboboxMemory.bind("<<ComboboxSelected>>",self.updateMemory)
-        self.comboboxMemory.pack()
-        
-        self.frmForUpdateMemory = ttk.Frame(self.mainFrameMemory)
-        self.frmForUpdateMemory.pack(side=BOTTOM)
-        
-        frmComboboxMemory.pack(fill=BOTH)
-    
-    def updateMemory(self, event):
-        for child in self.frmForUpdateMemory.winfo_children():
-            child.destroy()
-            
-        value = self.comboboxMemory.get()
-        
-        if value == True:
-            self.addToMainFrameMemoryContinuous()
-        else:
-            self.addToMainFrameMemoryPaging()
-    
-    def addToMainFrameMemoryContinuous(self):
-        Label(self.frmForUpdateMemory, text="Allocation Methods").pack()
-        self.comboboxAllocation = Combobox(self.frmForUpdateMemory, text="Fit", values=None)
-        self.comboboxAllocation.pack()
-    
-    def addToMainFrameMemoryPaging(self):
-        Label(self.frmForUpdateMemory, text="Page replacement").pack()
-        self.comboboxPageReplacement = Combobox(self.frmForUpdateMemory, text="Page replacement", values=None)
-        self.comboboxPageReplacement.pack()
-        Label(self.frmForUpdateMemory, text="Frame size").pack()
-        self.frameSize = Entry(self.frmForUpdateMemory)
-        self.frameSize.pack()
-    
-    def createFrameForScheduler(self, parent):
-        self.mainFrameScheduler = ttk.Frame(parent)
-        #Titulo del mainFrame
-        Label(self.mainFrameScheduler, text="Scheduler", background='black', foreground='white').pack(fill=BOTH)
-        ##Cuerpo
-        self.createBodyForScheduler()       
-        self.mainFrameScheduler.pack()
-        
-    def createBodyForScheduler(self):
-        # Combobox Scheduler
-        Label(self.mainFrameScheduler, text="Scheduler Type").pack()
-        self.createComboboxForScheduler()
-        
-    def createComboboxForScheduler(self):
-        frmComboboxScheduler = ttk.Frame(self.mainFrameScheduler)
-        self.comboboxScheduler = Combobox(frmComboboxScheduler, text="Scheduler Type", values=None)
-        self.comboboxScheduler.bind("<<ComboboxSelected>>",self.updateScheduler)
-        self.comboboxScheduler.pack()
-        
-        self.frmForUpdateScheduler = ttk.Frame(self.mainFrameScheduler)
-        self.frmForUpdateScheduler.pack(side=BOTTOM)
-        
-        frmComboboxScheduler.pack(fill=BOTH)
-                
-    def updateScheduler(self, event):
-        for child in self.frmForUpdateScheduler.winfo_children():
-            child.destroy()
-        value = self.comboboxScheduler.get()
-        if value == True:
-            self.addToMainFrameSchedulerFifo()
-            return
-        if value == True:
-            self.addToMainFrameSchedulerRoundRobin()
-            return
-        if value == True:
-            self.addToMainFrameSchedulerPriority()
-            return
-        if value == True:
-            self.addToMainFrameSchedulerRRPriority()
-            return    
-
-    def addToMainFrameSchedulerFifo(self):
-        return
-    
-    def addToMainFrameSchedulerRoundRobin(self):
-        Label(self.frmForUpdateScheduler, text="Quantum").pack()
-        self.roundRobinQuantum = Entry(self.frmForUpdateScheduler)
-        self.roundRobinQuantum.pack()
-        
-    def addToMainFrameSchedulerPriority(self):
-        Label(self.frmForUpdateScheduler, text="Aging").pack()
-        self.aging = Entry(self.frmForUpdateScheduler,)
-        self.aging.pack()        
-        
-    def addToMainFrameSchedulerRRPriority(self):
-        Label(self.frmForUpdateScheduler, text="Quantum").pack()
-        self.roundRobinQuantum = Entry(self.frmForUpdateScheduler,)
-        self.roundRobinQuantum.pack()
-        Label(self.frmForUpdateScheduler, text="Aging").pack()
-        self.aging = Entry(self.frmForUpdateScheduler,)
-        self.aging.pack()   
-      
-    def createFrameForIO(self, parent):
-        self.mainFrameIO = ttk.Frame(parent)
-        #Titulo del mainFrame
-        Label(self.mainFrameIO, text="IO", background='black', foreground='white').pack(fill=BOTH)
-
-        ##Cuerpo 
-        Label(self.mainFrameIO, text= "IOS")
-        self.ios = Entry(self.mainFrameIO)
-        self.ios.pack()
-        
-        self.mainFrameIO.pack()
-               
-    def ok(self):
-        self.createKernel()
-        self.top.destroy()
-        
-    def createKernel(self):
-        typeScheduler = self.comboboxScheduler.get() 
-        typeMemory = self.comboboxMemory.get()
-        ios = self.ios.get()
-        build(typeScheduler, typeMemory, ios, self)
     
 class StdoutRedirector(object):
     def __init__(self,text_widget):
@@ -169,10 +18,7 @@ class StdoutRedirector(object):
 class AppNew:
     
     def __init__(self, master=None):        
-        self.titleApp = "Shell"
-        self.pwd = "usuario@sistemas:~"
-        self.move= "/"
-        self.shell = None
+        self.titleApp = "BotNet"
         self.sizeWindowX = 1500
         self.sizeWindowY = 300       
 
@@ -193,9 +39,7 @@ class AppNew:
         self.right.pack(side=RIGHT, expand=Y , fill=BOTH)
         self.left.pack(side=LEFT, expand=Y, fill=BOTH)
         
-        self.root.update()
-        d = None
-        self.root.wait_window(d)        
+        self.root.update()      
     
     def createRight(self): 
         frmRight = ttk.Frame(self.right)
@@ -216,9 +60,6 @@ class AppNew:
         listBoxIO = self.create_listbox_io(self.pw)
         self.pw.add(listBoxIO)
         
-        self.pw.add(Label(self.pw, text="", background='black', foreground='white'))
-        listBoxMemory = self.create_listbox_memory(self.pw)
-        self.pw.add(listBoxMemory)
             
     def create_listbox_cpu(self, parent):
         f = ttk.Frame(parent)        
@@ -264,7 +105,7 @@ class AppNew:
         pw = ttk.PanedWindow(frmLeft, orient=VERTICAL)
         pw.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx='2m')
  
-        top = self.createTextBox(pw)
+        top = self.createTextBoxForCommand(pw)
         pw.add(top)
         
         bot = self.createTextRecord(pw)
@@ -283,20 +124,20 @@ class AppNew:
         lb.pack(fill=BOTH, expand=Y)         
         return f    
     
-    def createTextBox(self, frameParent):
+    def createTextBoxForCommand(self, frameParent):
         frmTextBox = ttk.Frame(frameParent)
         labelPwd = Label(frmTextBox, text="ServerConsole", background='black', foreground='white')
         labelPwd.pack(fill=BOTH)
-        textBox = Entry(frmTextBox, width=60)
-        textBox.bind('<Return>', self.getTextFromTextBox)
+        textBox = Text(frmTextBox, height=10, width=60)
+        textBox.bind('<Return>', self.getCommand)
         textBox.pack(fill=BOTH)
         return frmTextBox
         
-    def getTextFromTextBox(self, event):
-        text = event.widget.get() 
-        result  = self.shell.execCommand(text)
-        print(self.pwd + self.move + text + '\n' + str(result))
-        event.widget.delete(0, len(text))
+    def getCommand(self, event):
+        text = event.widget.get(1.0, END) 
+        setMessage(text)
+        print("System send: " + text)
+        event.widget.delete(1.0, END)
                         
 app = AppNew()
 app.root.mainloop()

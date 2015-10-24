@@ -1,4 +1,4 @@
 from Server import ServerOutput
 
-serv = ServerOutput("10.9.1.206", 10001)
+serv = ServerOutput("10.12.5.43", 10001)
 serv.run()
