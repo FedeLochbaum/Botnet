@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
 from Functions import setMessage
+from Functions import connections
 from Functions import getIps
 from Parser import Parser
 
@@ -66,11 +67,13 @@ class AppNew:
             
     def create_listbox_Ips(self, parent):
         f = ttk.Frame(parent)        
-        self.listboxCpu = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=getIps)
-        self.listboxCpu['yscrollcommand'] = vscroll.set
+        self.listIps = Listbox(f)
+        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=None)
+        self.listIps['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
-        self.listboxCpu.pack(fill=BOTH, expand=Y)         
+        self.listIps.pack(fill=BOTH, expand=Y)
+        self.listIps.bind('<Return>', connections)
+           
         return f      
 
     def create_listbox_Connections(self, parent):
@@ -131,4 +134,5 @@ class AppNew:
         self.parser.execCommand(text)
         print("System send: " + text)
         event.widget.delete(1.0, END)
-                        
+        
+                 
