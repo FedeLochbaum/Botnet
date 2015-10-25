@@ -1,4 +1,5 @@
 import threading 
+from _socket import socket
 message = ""
 connections = dict()
 
@@ -11,7 +12,7 @@ def setMessage(mes):
         message = mes
         return  #+ " @ " + str(isFinish)
     
-def getIps():
+def getSocket():
     return connections.keys()
         
 def getMessage():
@@ -19,9 +20,9 @@ def getMessage():
         print("Global ->" + message)        
         return bytes(message, "utf-8")
     
-def addConnection(ip_user, connection):
+def addConnection(sock, connection):
     global connections
-    connections[ip_user] = connection
+    connections[sock] = connection
     return
     
 def getConnections():

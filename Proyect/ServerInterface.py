@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter.ttk import Combobox
 from Functions import setMessage
 from Functions import connections
-from Functions import getIps
+from Functions import getSocket
 from Parser import Parser
 
    
@@ -68,11 +68,12 @@ class AppNew:
     def create_listbox_Ips(self, parent):
         f = ttk.Frame(parent)       
         self.listIps = Listbox(f)
+        for ip,i in getSocket():
+            self.listIps.insert(END,ip)
         vscroll = ttk.Scrollbar(f, orient=VERTICAL,command=self.listIps.yview)
         self.listIps['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
         self.listIps.pack(fill=BOTH, expand=Y)
-        self.listIps.bind("<Return>",self.getips)
         return f      
 
     def create_listbox_Connections(self, parent):
@@ -132,8 +133,4 @@ class AppNew:
         text = event.widget.get(1.0, END) 
         self.parser.execCommand(text)
         print("System send: " + text)
-        event.widget.delete(1.0, END)
-        
-    def getips(self,Event):
-        for ip in getIps():
-            self.listIps.index(ip)         
+        event.widget.delete(1.0, END)         
