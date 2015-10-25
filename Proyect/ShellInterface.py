@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
 from Functions import setMessage
+from Parser import Parser
 
    
 def build(typeScheduler, typeMemory, ios, configOs):
@@ -20,10 +21,11 @@ class AppNew:
     def __init__(self, master=None):        
         self.titleApp = "BotNet"
         self.sizeWindowX = 1500
-        self.sizeWindowY = 300       
+        self.sizeWindowY = 300   
+        
+        self.parser = Parser()   
 
         self.initTK()
-        
         
     def initTK(self):
         self.root = Tk()
@@ -135,7 +137,7 @@ class AppNew:
         
     def getCommand(self, event):
         text = event.widget.get(1.0, END) 
-        setMessage(text)
+        self.parser.execCommand(text)
         print("System send: " + text)
         event.widget.delete(1.0, END)
                         

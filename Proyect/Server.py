@@ -1,7 +1,6 @@
 import socket
 from Functions import setMessage, getMessage, addConnection
 import threading
-#from _dbus_bindings import Message
 
 class Server(threading.Thread):
     
@@ -11,7 +10,6 @@ class Server(threading.Thread):
         self.port = port        
 
     def run(self):
-        
         print(str(self.ip) + " " + str(self.port))
         # Create a TCP/IP socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   
@@ -31,10 +29,6 @@ class Server(threading.Thread):
                 connection.close()
 
 class ServerOutput(Server):
-
-    def init(self):
-        self.ip = "10.12.5.43"
-        self.port = 10001
             
     def runSpecific(self, connection):
         data = connection.recv(160000).decode("utf-8")
@@ -42,10 +36,6 @@ class ServerOutput(Server):
     
 class ServerInput(Server):
     
-    def init(self):
-        self.ip = "10.12.5.43"
-        self.port = 10000
-
     def conectWithOneConnection(self,key,command):
         connection = self.connections.get(key) 
         setMessage(command)
