@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
 from Functions import setMessage
+from Functions import getIps
 from Parser import Parser
 
    
@@ -51,50 +52,40 @@ class AppNew:
         self.pw.pack(side=TOP, expand=Y, fill=BOTH, pady=2, padx='2m')
         
         self.pw.add(Label(self.pw, text="Infeted Ips", background='black', foreground='white'))
-        listBoxCpu = self.create_listbox_cpu(self.pw)
-        self.pw.add(listBoxCpu)
+        listIps = self.create_listbox_Ips(self.pw)
+        self.pw.add(listIps)
         
         self.pw.add(Label(self.pw, text="Answers", background='black', foreground='white'))
-        listBoxInterruption = self.create_listbox_interruption(self.pw)
-        self.pw.add(listBoxInterruption)
+        listAnswers = self.create_listbox_Answers(self.pw)
+        self.pw.add(listAnswers)
         
         self.pw.add(Label(self.pw, text="Connections", background='black', foreground='white'))
-        listBoxIO = self.create_listbox_io(self.pw)
-        self.pw.add(listBoxIO)
+        listConnections = self.create_listbox_Connections(self.pw)
+        self.pw.add(listConnections)
         
             
-    def create_listbox_cpu(self, parent):
+    def create_listbox_Ips(self, parent):
         f = ttk.Frame(parent)        
         self.listboxCpu = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=self.listboxCpu.yview)
+        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=getIps)
         self.listboxCpu['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
         self.listboxCpu.pack(fill=BOTH, expand=Y)         
         return f      
 
-    def create_listbox_io(self, parent):
+    def create_listbox_Connections(self, parent):
         f = ttk.Frame(parent)        
         self.listboxIo = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=self.listboxIo.yview)
+        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=None)
         self.listboxIo['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
         self.listboxIo.pack(fill=BOTH, expand=Y)         
         return f   
-    
-    def create_listbox_memory(self, parent):
-        f = ttk.Frame(parent)        
-        self.listboxMemory = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=self.listboxMemory.yview)
-        self.listboxMemory['yscrollcommand'] = vscroll.set
-        vscroll.pack(side=RIGHT, fill=Y)
-        self.listboxMemory.pack(fill=BOTH, expand=Y)         
-        return f   
-    
             
-    def create_listbox_interruption(self, parent):        
+    def create_listbox_Answers(self, parent):        
         f = ttk.Frame(parent)        
         self.listboxInterruption = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=self.listboxInterruption.yview)
+        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=None)
         self.listboxInterruption['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
         self.listboxInterruption.pack(fill=BOTH, expand=Y)         

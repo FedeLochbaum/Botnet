@@ -10,6 +10,9 @@ def setMessage(mes):
         print("SET - Global ->" + mes)
         message = mes
         return  #+ " @ " + str(isFinish)
+    
+def getIps():
+    return connections.keys()
         
 def getMessage():
     with mutex:
