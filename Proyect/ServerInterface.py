@@ -66,29 +66,28 @@ class AppNew:
         
             
     def create_listbox_Ips(self, parent):
-        f = ttk.Frame(parent)        
+        f = ttk.Frame(parent)       
         self.listIps = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=None)
+        vscroll = ttk.Scrollbar(f, orient=VERTICAL,command=self.listIps.yview)
         self.listIps['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
         self.listIps.pack(fill=BOTH, expand=Y)
-        self.listIps.bind('<Return>', connections)
-           
+        self.listIps.bind("<Return>",self.getips)
         return f      
 
     def create_listbox_Connections(self, parent):
         f = ttk.Frame(parent)        
-        self.listboxIo = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=None)
-        self.listboxIo['yscrollcommand'] = vscroll.set
+        self.create_listbox_Connections = Listbox(f)
+        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=self.create_listbox_Connections.yview)
+        self.create_listbox_Connections['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
-        self.listboxIo.pack(fill=BOTH, expand=Y)         
+        self.create_listbox_Connections.pack(fill=BOTH, expand=Y)         
         return f   
             
     def create_listbox_Answers(self, parent):        
         f = ttk.Frame(parent)        
         self.listboxInterruption = Listbox(f)
-        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=None)
+        vscroll = ttk.Scrollbar(f, orient=VERTICAL, command=self.listboxInterruption.yview)
         self.listboxInterruption['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
         self.listboxInterruption.pack(fill=BOTH, expand=Y)         
@@ -135,4 +134,6 @@ class AppNew:
         print("System send: " + text)
         event.widget.delete(1.0, END)
         
-                 
+    def getips(self,Event):
+        for ip in getIps():
+            self.listIps.index(ip)         
