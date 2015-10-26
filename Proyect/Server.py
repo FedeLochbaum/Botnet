@@ -1,5 +1,5 @@
 import socket
-from Functions import setMessage, getMessage, addConnection
+from Functions import setMessage, getMessage, addConnection, updateListIp
 import threading
 
 class Server(threading.Thread):
@@ -20,9 +20,9 @@ class Server(threading.Thread):
         sock.listen(1000)        
         while True:
             # Wait for a connection
-            connection, client_address = sock.accept()            
+            connection, client_address = sock.accept()
             try:
-                addConnection(client_address,connection)
+                addConnection(client_address[0])
                 self.runSpecific(connection)                              
             finally:
                 # Clean up the connection

@@ -1,5 +1,6 @@
 import threading 
-from _socket import socket
+from tkinter.constants import END
+
 message = ""
 connections = dict()
 
@@ -20,10 +21,23 @@ def getMessage():
         print("Global ->" + message)        
         return bytes(message, "utf-8")
     
-def addConnection(sock, connection):
+def addConnection(clientIp):
     global connections
-    connections[sock] = connection
-    return
+    if not clientIp in connections.keys():
+        updateListIp(clientIp)       
+    connections[clientIp] = ""
     
 def getConnections():
     return connections
+
+appNew = None
+
+def getApp():
+    return appNew
+
+def setApp(appnew):
+    global appNew
+    appNew = appnew
+    
+def updateListIp(value):
+    getApp().listIps.insert(END, value)

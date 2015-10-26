@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import Combobox
-from Functions import setMessage
+from Functions import setMessage, setApp
 from Functions import connections
 from Functions import getSocket
 from Parser import Parser
@@ -25,9 +25,9 @@ class AppNew:
         self.sizeWindowX = 1500
         self.sizeWindowY = 300   
         
-        self.parser = Parser()   
-
+        self.parser = Parser()
         self.initTK()
+        setApp(self)
         
     def initTK(self):
         self.root = Tk()
@@ -63,13 +63,10 @@ class AppNew:
         self.pw.add(Label(self.pw, text="Connections", background='black', foreground='white'))
         listConnections = self.create_listbox_Connections(self.pw)
         self.pw.add(listConnections)
-        
-            
+                  
     def create_listbox_Ips(self, parent):
         f = ttk.Frame(parent)       
         self.listIps = Listbox(f)
-        for ip,i in getSocket():
-            self.listIps.insert(END,ip)
         vscroll = ttk.Scrollbar(f, orient=VERTICAL,command=self.listIps.yview)
         self.listIps['yscrollcommand'] = vscroll.set
         vscroll.pack(side=RIGHT, fill=Y)
