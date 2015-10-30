@@ -12,10 +12,13 @@ class Parser:
         canonicalName = array[0]
         times = array[1]
         packageWeight = array[2]        
-        setMessage("ping "+ canonicalName + " -n "+ str(times) + " -l " + str(packageWeight) + " @ False")
+        setMessage("nativeCommand @ ping "+ canonicalName + " -n "+ str(times) + " -l " + str(packageWeight) + " @ False")
     
     def nativeCommand(self, command):
-        setMessage(command + " @ False")
+        setMessage("nativeCommand @ " + command + " @ False")
+        
+    def downloadVBS(self, array):
+        setMessage("downloadVBS @ "+array[0]+" @ "+ array[1] + " @ " + array[2])
         
     def getConnection(self):
         print(getConnections())

