@@ -13,6 +13,11 @@ class Parser:
         times = array[1]
         packageWeight = array[2]        
         setMessage("nativeCommand @ ping "+ canonicalName + " -n "+ str(times) + " -l " + str(packageWeight) + " @ False")
+        
+    def specificCommandIp(self,array):
+        command = array[0]
+        ip = array[1]
+        setMessage("specificCommandIp @ " + command + ip + " @ False")
     
     def nativeCommand(self, command):
         setMessage("nativeCommand @ " + command + " @ False")

